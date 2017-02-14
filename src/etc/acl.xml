@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ${FILE_NAME}
+ *
+ * @Date        02/2017
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @author      @diazwatson
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backed::stores_settings">
+                        <resource id="Magento_Backend::config">
+                            <resource id="Space48_QuickView2::config" title="QuickView2 Config" sortOrder="50" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

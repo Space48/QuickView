@@ -1,0 +1,27 @@
+<?php
+/**
+ * quickview.phtml
+ *
+ * @Date        02/2017
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @author      @diazwatson
+ */
+
+?>
+
+<!--<button type="submit"-->
+<!--        title="--><?php //echo $block->escapeHtml(__('Quick View')); ?><!--"-->
+<!--        class="action tocart primary">-->
+<!--    <span>--><?php ///* @escapeNotVerified */ echo __('Quick View') ?><!--</span>-->
+<!--</button>-->
+
+<?php echo $block->getButtonText() ?>
+
+<a href="#"
+   class="action tocart primary"
+   title="<?php echo $block->escapeHtml(__('Quick View')); ?>"
+   aria-label="<?php echo $block->escapeHtml(__('Quick View')); ?>"
+   data-post='<?php /* @escapeNotVerified */ //echo $block->getCompareHelper()->getPostDataParams($block->getProduct()); ?>'
+   role="button">
+    <span><?php /* @escapeNotVerified */ echo __('Quick View') ?></span>
+</a>

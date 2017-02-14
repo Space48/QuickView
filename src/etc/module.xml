@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Space48_QuickView2
+ *
+ * @category    Diazwatson
+ * @package     Space48_QuickView2
+ * @Date        02/2017
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @author      @diazwatson
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Space48_QuickView2" setup_version="1.0.0">
+    </module>
+</config>

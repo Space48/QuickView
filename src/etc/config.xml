@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+ * Space48_QuickView2
+ *
+ * @category    Diazwatson
+ * @package     Space48_QuickView2
+ * @Date        02/2017
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @author      @diazwatson
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <space48_quickview2_section>
+            <Space48_QuickView2>
+                <quickview_text>QUICK VIEW</quickview_text>
+                <custom_css>background-color: DarkOrange</custom_css>
+            </Space48_QuickView2>
+        </space48_quickview2_section>
+    </default>
+
+</config>

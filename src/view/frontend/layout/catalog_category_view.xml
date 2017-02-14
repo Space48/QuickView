@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * ${FILE_NAME}
+ *
+ * @Date        02/2017
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @author      @diazwatson
+ */-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <!--<update handle="catalog_category_view"/>-->
+    <body>
+        <referenceBlock name="category.product.addto">
+                <container name="quickview.category.view" htmlTag="div" htmlClass="quickView" after="-">
+                    <block class="Space48\QuickView2\Block\Category\View" name="quick.view" template="Space48_QuickView2::category/quickview.phtml"/>
+                </container>
+        </referenceBlock>
+    </body>
+</page>
