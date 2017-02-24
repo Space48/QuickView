@@ -10,12 +10,12 @@
  */-->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="space48_quickview2" translate="label" sortOrder="105">
+        <tab id="space48" translate="label" sortOrder="105">
             <label>Space48</label>
         </tab>
         <section id="space48_quickview2_section" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
             <label>QuickView</label>
-            <tab>space48_quickview2</tab>
+            <tab>space48</tab>
             <resource>Space48_QuickView2::config</resource>
             <group id="Space48_QuickView2" translate="label" type="text" sortOrder="300" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>General</label>
