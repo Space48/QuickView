@@ -1,12 +1,25 @@
+<div class="quickview-colorbox-wrap" style="display:none">
+    <div id="quickview-colorbox" class="js-quickview-modal" data-bind="scope:'modalcomponent'">
+        <!-- ko template: getTemplate() --><!-- /ko -->
+    </div>
+</div>
 <script type="text/x-magento-init">
-    {
-        ".js-quickview-modal": {
-            "quickView": {
-                "urls": {
-                    "18": "http://coxandcoxm2-local.space48.com/quickview/product/view/id/18"
+{
+    ".js-quickview-modal": {
+        "quickView": {
+            "buttonSelector": ".js-quickview-action",
+            "urls": {
+                "18": "http://coxandcoxm2-local.space48.com/quickview/product/view/id/18"
+            }
+        },
+        "Magento_Ui/js/core/app": {
+           "components": {
+                "modalcomponent": {
+                    "component": "Space48_QuickView/js/quickview-modal",
+                    "template": "Space48_QuickView/quick-view"
                 }
             }
         }
     }
+}
 </script>
-<div class="js-quickview-modal"></div>

@@ -10,12 +10,16 @@
  * @author      @diazwatson
  */-->
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Space48_QuickView::css/lib/colorbox.css" />
+    </head>
     <body>
         <referenceBlock name="category.product.addto">
-            <block class="Space48\QuickView\Block\Catalog\Category\View\QuickView" name="quick.view" template="Space48_QuickView::catalog/product/list/quickview.phtml"/>
+            <block class="Space48\QuickView\Block\Catalog\Category\View\QuickView" name="quick.view" template="Space48_QuickView::catalog/product/list/quickview-action.phtml"/>
         </referenceBlock>
         <referenceBlock name="main">
             <block class="Space48\QuickView\Block\Catalog\Category\View\QuickView"
+                    before="-"
                     name="quick.view.modal"
                     template="Space48_QuickView::catalog/product/list/quickview-modal.phtml" />
         </referenceBlock>
