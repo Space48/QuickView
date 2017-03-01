@@ -4,10 +4,12 @@ define([
 ], function($) {
     'use strict';
 
-    return function (optionsConfig) {
-        var quickView = $('<div/>').html(optionsConfig.html).modal({
+    return function (config, node) {
+        var $quickView = $('.js-quickview-modal');
+        var productId = $(node).data('product-id');
+
+        $quickView.modal({
             modalClass: 'quickview-modal',
-            // title: $.mage.__('Quick View'),
             type: 'popup',
             buttons: [{
                 text: 'Ok',
@@ -16,14 +18,18 @@ define([
                 }
             }]
         });
-        $('.js-modal-open').on('click', function() {
+
+        $(node).on('click', function() {
             $.ajax(
-                'http://local.quickview2.com/breathe-easy-tank.html?uenc=true',
-                {
-                    method: 'POST'
+                config.urls[productId],{
+                    method: 'POST',
+                    success: function (response) {
+                        console.log(response);
+                        $quickView.html(JSON.stringify(response));
+                        $quickView.modal('openModal');
+                    }
                 }
             );
-            quickView.modal('openModal');
         });
     };
 });

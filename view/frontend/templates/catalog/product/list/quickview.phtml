@@ -1,17 +1,10 @@
 <?php /** @var Space48\QuickView\Block\Catalog\Category\View\QuickView $block */ ?>
-<script type="text/x-magento-init">
-{
-    "*": {
-        "quickView": <?php echo $block->getQuickViewJson(); ?>
-    }
-}
-</script>
-<a href="#"
+<a href="javascript:void(0)"
    id="quick-view-<?php echo $block->getProduct()->getId();?>"
    data-product-id="<?php echo $block->getProduct()->getId();?>"
-   class="action tocart primary js-modal-open"
+   class="action tocart primary js-quick-view js-quickview-action"
    title="<?php echo $block->escapeHtml(__($block->getButtonText())); ?>"
    aria-label=""
    role="button">
-    <span><?php /* @escapeNotVerified */ echo __($block->getButtonText()) ?></span>
+    <?php /* @escapeNotVerified */ echo __($block->getButtonText()) ?>
 </a>

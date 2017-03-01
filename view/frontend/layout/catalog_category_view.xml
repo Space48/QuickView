@@ -12,9 +12,12 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="category.product.addto">
-                <!--<container name="quickview.category.view" htmlTag="div" htmlClass="quickView" after="-">-->
-                    <block class="Space48\QuickView\Block\Catalog\Category\View\QuickView" name="quick.view" template="Space48_QuickView::catalog/product/list/quickview.phtml"/>
-                <!--</container>-->
+            <block class="Space48\QuickView\Block\Catalog\Category\View\QuickView" name="quick.view" template="Space48_QuickView::catalog/product/list/quickview.phtml"/>
+        </referenceBlock>
+        <referenceBlock name="main">
+            <block class="Space48\QuickView\Block\Catalog\Category\View\QuickView"
+                    name="quick.view.modal"
+                    template="Space48_QuickView::catalog/product/list/quickview-modal.phtml" />
         </referenceBlock>
     </body>
 </page>
