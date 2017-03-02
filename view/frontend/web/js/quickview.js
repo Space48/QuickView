@@ -7,26 +7,32 @@ define([
     'use strict';
 
     return function (config, node) {
+
         var $quickView = $('.js-quickview-modal');
         var quickViewComponent = quickView();
 
         $(config.buttonSelector).on('click', function() {
-            var productId = $(this).data('product-id');
-            $.ajax(
-                config.urls[productId],{
-                    method: 'POST',
-                    success: function (response) {
-                        quickViewComponent.update({
-                            name: response.name,
-                            sku: response.sku
-                        });
-                        $.colorbox({
-                            inline: true,
-                            href: $quickView
-                        });
-                    }
+
+            var url = $(this).data('quickview-url');
+
+            $.ajax(url, {
+                method: 'POST',
+                success: function (response) {
+                    quickViewComponent.update({
+                        name: response.name,
+                        sku: response.sku,
+                        is_salable: response.is_salable
+                    });
+                    $.colorbox({
+                        inline: true,
+                        href: $quickView,
+                        opacity: config.overlayOpacity,
+                        closeButton: config.closeButton,
+                        width: config.width,
+                        maxWidth: config.maxWidth
+                    });
                 }
-            );
+            });
         });
     };
 });

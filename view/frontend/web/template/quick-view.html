@@ -1,9 +1,73 @@
-QUICKVIEW
-<div class="data">
-    <div class="product-name">
-        <span data-bind="text: productName"></span>
-    </div>
-    <div class="product-sku">
-        <span data-bind="text: productSku"></span>
-    </div>
+<div class="quickview-content">
+    <form action="/" method="post">
+        <div class="product-info-main-wrapper">
+            <div class="product-info-main">
+                <div class="breadcrumbs">
+                    <ul class="items">
+                        <li class="item home">
+                            <a href="#">
+                                <span data-bind="i18n: 'Home'"></span>
+                            </a>
+                        </li>
+                        <li class="category">
+                            <a href="#">
+                                Category
+                            </a>
+                        </li>
+                        <li class="item product">
+                            <span data-bind="text: productName"></span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="product-title-wrapper">
+                    <h3 class="product-title" data-bind="text: productName"></h3>
+                </div>
+                <div class="product-info-price">
+                    <div class="price-box price-final_price">
+                        <div class="price-wrapper">
+                            <span class="price">£20.00</span>
+                        </div>
+                    </div>
+                    <div class="product-info-stock-sku">
+                        <div if="getIsSalable()" class="stock available" title="Availability">
+                            <span data-bind="i18n: 'Availability'"></span><span>:</span>
+                            <span class="stock-text" data-bind="i18n: 'In stock'"></span>
+                        </div>
+                        <div ifnot="getIsSalable()" class="stock unavailable" title="Availability">
+                            <span data-bind="i18n: 'Availability'"></span><span>:</span>
+                            <span class="stock-text" data-bind="i18n: 'Out of stock'"></span>
+                        </div>
+                        <div class="product attribute sku">
+                            <strong class="type" data-bind="i18n: 'SKU'"></strong>
+                            <div class="value" data-bind="text: productSku"></div>
+                        </div>
+                    </div>
+                </div>
+                <div if="getIsSalable()" class="box-tocart">
+                    <div class="fieldset">
+                        <div class="quantity-selector js-quantity-selector">
+                            <div class="field qty">
+                                <label class="label" for="qty"><span>Qty</span></label>
+                                <div class="control">
+                                    <input type="number" name="qty" id="qty" maxlength="12" value="1" title="Qty" class="input-text qty" data-validate="{&quot;required-number&quot;:true,&quot;validate-item-quantity&quot;:{&quot;minAllowed&quot;:1}}">
+                                </div>
+                            </div>
+                            <button type="button" name="qty-minus" class="quantity-selector__minus js-qty-minus">-</button>
+                            <button type="button" name="qty-plus" class="quantity-selector__plus js-qty-plus">+</button>
+                            <div class="quantity-selector__info">
+                                <span>
+                                    <span data-bind="i18n: 'Qty'"></span>:<span class="js-qty-text">1</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button type="submit" data-bind="attr: {title: $t('Add to Basket')}" class="action primary tocart">
+                                <span data-bind="i18n: 'Add to Basket'"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
