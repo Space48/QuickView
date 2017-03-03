@@ -10,14 +10,22 @@ define([
 
         var $quickView = $('.js-quickview-modal');
         var quickViewComponent = quickView();
+        var loading;
 
         $(config.buttonSelector).on('click', function() {
 
             var url = $(this).data('quickview-url');
 
+            if (loading) {
+                return;
+            }
+
+            loading = true;
+
             $.ajax(url, {
                 method: 'POST',
                 success: function (response) {
+                    loading = false;
                     quickViewComponent.update({
                         name: response.name,
                         sku: response.sku,
@@ -31,6 +39,9 @@ define([
                         width: config.width,
                         maxWidth: config.maxWidth
                     });
+                },
+                error: function () {
+                    loading = false;
                 }
             });
         });
