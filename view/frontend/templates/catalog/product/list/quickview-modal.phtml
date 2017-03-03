@@ -1,5 +1,5 @@
 <div class="quickview-colorbox-wrap" style="display:none">
-    <div id="quickview-colorbox" class="js-quickview-modal" data-bind="scope:'modalcomponent'">
+    <div id="quickview-colorbox" class="js-quickview-modal" data-bind="scope:'quickview-modal'">
         <!-- ko template: getTemplate() --><!-- /ko -->
     </div>
 </div>
@@ -15,7 +15,7 @@
         },
         "Magento_Ui/js/core/app": {
            "components": {
-                "modalcomponent": {
+                "quickview-modal": {
                     "component": "Space48_QuickView/js/quickview-modal",
                     "template": "Space48_QuickView/quick-view"
                 }
