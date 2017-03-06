@@ -36,8 +36,16 @@
                 </div>
                 <div class="product-info-price">
                     <div class="price-box price-final_price">
-                        <div class="price-wrapper">
+                        <div ifnot="productSpecialPrice()" class="price-wrapper">
                             <span class="price" data-bind="text: productPrice"></span>
+                        </div>
+                        <div if="productSpecialPrice()" class="price-wrapper">
+                            <span class="old-price">
+                                <span class="price" data-bind="text: productPrice"></span>
+                            </span>
+                            <span class="special-price">
+                                <span class="price" data-bind="text: productSpecialPrice"></span>
+                            </span>
                         </div>
                     </div>
                     <div class="product-info-stock-sku">
@@ -80,7 +88,7 @@
                     </div>
                 </div>
                 <div class="full-details-view">
-                    <a class="full-details-link" data-bind="attr: { href: '#' }">
+                    <a class="full-details-link" data-bind="attr: { href: productUrl() }">
                         <span data-bind="i18n: 'View full details'"></span>
                     </a>
                 </div>

@@ -59,7 +59,7 @@ class View extends Action
             'sku'           => $product->getData('sku'),
             'is_salable'    => $product->getData('is_salable'),
             'price'         => $this->_priceHelper->currency($product->getData('price'), true, false),
-            'special_price' => $this->_priceHelper->currency($product->getData('special_price'), true, false),
+            'special_price' => ($product->getData('special_price')) ? $this->_priceHelper->currency($product->getData('special_price'), true, false) : null,
             'product_url'   => $product->getProductUrl(),
             'gallery'       => $product->getData('media_gallery'),
             'breadcrumb'    => array()
