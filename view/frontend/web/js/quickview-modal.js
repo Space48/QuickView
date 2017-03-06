@@ -13,7 +13,10 @@ define([
             root = this;
 
             this.productName = ko.observable('');
+            this.productPrice = ko.observable('');
+            this.productSpecialPrice = ko.observable('');
             this.productSku = ko.observable('');
+            this.productUrl = ko.observable('');
             this.isSalable = ko.observable('');
             this.quantity = ko.observable(1);
             this.imageIndex = ko.observable(0);
@@ -43,7 +46,10 @@ define([
         update: function (data) {
             // Called from quickview.js, on XHR response
             root.productName(data.name);
+            root.productPrice(data.price);
+            root.productSpecialPrice(data.special_price);
             root.productSku(data.sku);
+            root.productUrl(data.product_url);
             root.isSalable(data.is_salable);
 
             // Defaults
