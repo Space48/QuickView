@@ -9,8 +9,7 @@
  * @author      @diazwatson
  */
 
-
-declare(strict_types=1);
+declare(strict_types = 1);
 
 namespace Space48\QuickView\Block\Catalog\Category\View;
 
@@ -22,6 +21,7 @@ class QuickView extends Template
 {
 
     const SYSTEM_CONFIG_PATH = 'space48_quickview/general/';
+    const QUICKVIEW_PRODUCT_VIEW_ID = 'quickview/product/view/id/';
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
@@ -63,5 +63,10 @@ class QuickView extends Template
     public function getProduct()
     {
         return $this->getParentBlock()->getChildBlock('compare')->getProduct();
+    }
+
+    public function getQuickViewUrl($productId)
+    {
+        return $this->getBaseUrl() . self::QUICKVIEW_PRODUCT_VIEW_ID . $productId;
     }
 }
