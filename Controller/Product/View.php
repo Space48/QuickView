@@ -13,12 +13,11 @@ declare(strict_types = 1);
 
 namespace Space48\QuickView\Controller\Product;
 
-use Magento\Catalog\Block\Product\ImageBuilder;
+use Magento\Catalog\Helper\Image;
 use Magento\Catalog\Model\ProductRepository;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Pricing\Helper\Data;
 
 class View extends Action
@@ -39,29 +38,23 @@ class View extends Action
      */
     protected $_priceHelper;
 
-    /**
-     * @var StoreManagerInterface
-     */
-    protected $_storeManager;
 
     /**
-     * @var ImageBuilder
+     * @var Image
      */
-    private $_imageBuilder;
+    private $imageHelper;
 
     public function __construct(
         Context $context,
-        StoreManagerInterface $storeManager,
         ProductRepository $productRepository,
-        ImageBuilder $imageBuilder,
+        Image $imageHelper,
         Data $priceHelper
     )
     {
-        $this->_storeManager = $storeManager;
         $this->_productRepository = $productRepository;
         $this->_priceHelper = $priceHelper;
+        $this->imageHelper = $imageHelper;
         parent::__construct($context);
-        $this->_imageBuilder = $imageBuilder;
     }
 
     /**
@@ -112,9 +105,10 @@ class View extends Action
     {
         $gallery = $product->getData('media_gallery');
         foreach ($gallery['images'] as $key => $image) {
-            $gallery['images'][$key]['file'] = $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $image['file'];
-//            $gallery['images'][$key]['thumbnail'] = $this->_imageBuilder->setProduct($product)->setImageId('thumbnail')->setAttributes(array())->create();
+            $gallery['images'][$key]['file'] = $this->imageHelper->init($product, 'product_page_image_large')->setImageFile($image['file'])->getUrl();
+            $gallery['images'][$key]['thumbnail'] = $this->imageHelper->init($product, 'product_page_image_small')->setImageFile($image['file'])->getUrl();
         }
+
 
         return $gallery;
     }
