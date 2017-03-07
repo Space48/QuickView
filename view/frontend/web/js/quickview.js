@@ -26,14 +26,7 @@ define([
                 method: 'POST',
                 success: function (response) {
                     loading = false;
-                    quickViewComponent.update({
-                        name: response.name,
-                        price: response.price,
-                        special_price: response.special_price,
-                        sku: response.sku,
-                        product_url: response.product_url,
-                        is_salable: response.is_salable
-                    });
+                    quickViewComponent.update(response);
                     $.colorbox({
                         inline: true,
                         href: $quickView,

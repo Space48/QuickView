@@ -1,15 +1,11 @@
 <div class="quickview-content">
     <form action="/" method="post">
         <div class="quickview-gallery">
-            <ul class="quickview-gallery__main">
-                <li if="imageIndex() === 0" class="quickview-gallery__main-item"><img src="//placehold.it/600x800/aaaaaa" alt=""></li>
-                <li if="imageIndex() === 1" class="quickview-gallery__main-item"><img src="//placehold.it/600x800/bbbbbb" alt=""></li>
-                <li if="imageIndex() === 2" class="quickview-gallery__main-item"><img src="//placehold.it/600x800/cccccc" alt=""></li>
+            <ul data-bind="foreach: productImages" class="quickview-gallery__main">
+                <li if="index === $parent.imageIndex()" class="quickview-gallery__main-item"><img data-bind="attr: {src: file}"></li>
             </ul>
-            <ul class="quickview-gallery__thumbs">
-                <li class="quickview-gallery__thumb-item" data-bind="click: thumbnailSelect"><img src="//placehold.it/74x100/aaaaaa" alt=""></li>
-                <li class="quickview-gallery__thumb-item" data-bind="click: thumbnailSelect"><img src="//placehold.it/74x100/bbbbbb" alt=""></li>
-                <li class="quickview-gallery__thumb-item" data-bind="click: thumbnailSelect"><img src="//placehold.it/74x100/cccccc" alt=""></li>
+            <ul data-bind="foreach: productImages" class="quickview-gallery__thumbs">
+                <li class="quickview-gallery__thumb-item" data-bind="click: $parent.thumbnailSelect"><img data-bind="attr: {src: thumbnail}" alt=""></li>
             </ul>
         </div>
         <div class="product-info-main-wrapper">

@@ -1,8 +1,9 @@
 define([
     'jquery',
+    'underscore',
     'uiComponent',
     'ko'
-], function ($, Component, ko) {
+], function ($, _, Component, ko) {
     'use strict';
 
     var root;
@@ -18,6 +19,9 @@ define([
             this.productSku = ko.observable('');
             this.productUrl = ko.observable('');
             this.isSalable = ko.observable('');
+            this.productImages = ko.observableArray([]);
+
+            // Default values
             this.quantity = ko.observable(1);
             this.imageIndex = ko.observable(0);
 
@@ -40,11 +44,23 @@ define([
         },
 
         thumbnailSelect: function (model, node) {
-            this.imageIndex($(node.delegateTarget).index());
+            root.imageIndex($(node.delegateTarget).index());
         },
 
         update: function (data) {
             // Called from quickview.js, on XHR response
+            var images = [], index = 0;
+
+            _.each(data.gallery.images, function (image) {
+                images.push({
+                    'index': index++,
+                    'file': image.file,
+                    'thumbnail': image.thumbnail,
+                    'label': image.label
+                });
+            });
+
+            root.productImages(images);
             root.productName(data.name);
             root.productPrice(data.price);
             root.productSpecialPrice(data.special_price);
