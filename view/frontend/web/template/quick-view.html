@@ -2,10 +2,12 @@
     <form action="/" method="post">
         <div class="quickview-gallery">
             <ul data-bind="foreach: productImages" class="quickview-gallery__main">
-                <li if="index === $parent.imageIndex()" class="quickview-gallery__main-item"><img data-bind="attr: {src: file}"></li>
+                <li if="index === $parent.imageIndex()" class="quickview-gallery__main-item"><img data-bind="attr: {src: file, alt: label}"></li>
             </ul>
             <ul data-bind="foreach: productImages" class="quickview-gallery__thumbs">
-                <li class="quickview-gallery__thumb-item" data-bind="click: $parent.thumbnailSelect"><img data-bind="attr: {src: thumbnail}" alt=""></li>
+                <li data-bind="click: $parent.thumbnailSelect, attr: {class: 'quickview-gallery__thumb-item' + (index === $parent.imageIndex() ? ' is-active' : '')}">
+                    <img class="quickview-gallery__thumb-img" data-bind="attr: {src: thumbnail}" alt="">
+                </li>
             </ul>
         </div>
         <div class="product-info-main-wrapper">
