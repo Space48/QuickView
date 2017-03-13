@@ -13,6 +13,7 @@ declare(strict_types = 1);
 
 namespace Space48\QuickView\Controller\Product;
 
+use Magento\Catalog\Block\Product\ListProduct;
 use Magento\Catalog\Helper\Image;
 use Magento\Catalog\Model\ProductRepository;
 use Magento\Framework\App\Action\Action;
@@ -38,22 +39,33 @@ class View extends Action
      */
     protected $_priceHelper;
 
-
     /**
      * @var Image
      */
     private $imageHelper;
+    /**
+     * @var \Magento\Theme\Block\Html\Breadcrumbs
+     */
+    private $breadcrumbs;
+    /**
+     * @var ListProduct
+     */
+    private $listProduct;
 
     public function __construct(
         Context $context,
         ProductRepository $productRepository,
         Image $imageHelper,
-        Data $priceHelper
+        Data $priceHelper,
+        \Magento\Theme\Block\Html\Breadcrumbs $breadcrumbs,
+        ListProduct $listProduct
     )
     {
         $this->_productRepository = $productRepository;
         $this->_priceHelper = $priceHelper;
         $this->imageHelper = $imageHelper;
+        $this->breadcrumbs = $breadcrumbs;
+        $this->listProduct = $listProduct;
         parent::__construct($context);
     }
 
@@ -66,22 +78,22 @@ class View extends Action
     public function execute()
     {
         $productId = (int) $this->getRequest()->getParam('id');
+
         $product = $this->getProductById($productId);
 
         $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
 
-        $data = array(
+        $result = $result->setData(array(
             'name'          => $product->getData('name'),
+            'price'         => $this->formatPrice($product->getData('price')),
+            'special_price' => $this->formatPrice($product->getData('special_price')),
             'sku'           => $product->getData('sku'),
-            'is_salable'    => $product->getData('is_salable'),
-            'price'         => $this->_priceHelper->currency($product->getData('price'), true, false),
-            'special_price' => ($product->getData('special_price')) ? $this->_priceHelper->currency($product->getData('special_price'), true, false) : null,
             'product_url'   => $product->getProductUrl(),
+            'is_salable'    => $product->getData('is_salable'),
             'gallery'       => $this->getGallery($product),
-            'breadcrumb'    => array()
-        );
-
-        $result = $result->setData($data);
+            'breadcrumb'    => $this->getBreadcrumbs()->toHtml(),
+            'add_to_cart'   => $this->listProduct->getAddToCartPostParams($product)
+        ));
 
         return $result;
     }
@@ -97,6 +109,16 @@ class View extends Action
     }
 
     /**
+     * @param $price
+     *
+     * @return float|string
+     */
+    public function formatPrice($price)
+    {
+        return $this->_priceHelper->currency($price, true, false);
+    }
+
+    /**
      * @param $product
      *
      * @return mixed
@@ -105,12 +127,26 @@ class View extends Action
     {
         $gallery = $product->getData('media_gallery');
         foreach ($gallery['images'] as $key => $image) {
-            $gallery['images'][$key]['file'] = $this->imageHelper->init($product, 'product_page_image_large')->setImageFile($image['file'])->getUrl();
-            $gallery['images'][$key]['thumbnail'] = $this->imageHelper->init($product, 'product_page_image_small')->setImageFile($image['file'])->getUrl();
+            $gallery['images'][$key]['file'] = $this->imageHelper->init($product,
+                'product_page_image_large')->setImageFile($image['file'])->getUrl();
+            $gallery['images'][$key]['thumbnail'] = $this->imageHelper->init($product,
+                'product_page_image_small')->setImageFile($image['file'])->getUrl();
         }
 
-
         return $gallery;
+    }
+
+    private function getBreadcrumbs()
+    {
+        $breadcrumb = $this->breadcrumbs->addCrumb(
+            'potato',
+            [
+                'label' => 'Label',
+                'title' => 'title',
+                'link'  => 'link'
+            ]);
+
+        return $breadcrumb->toJson();
     }
 
 }

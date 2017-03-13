@@ -1,3 +1,4 @@
+<?php /** @var Space48\QuickView\Block\Catalog\Category\View\QuickView $block */ ?>
 <div class="quickview-colorbox-wrap" style="display:none">
     <div id="quickview-colorbox" class="js-quickview-modal" data-bind="scope:'quickview-modal'">
         <!-- ko template: getTemplate() --><!-- /ko -->
@@ -11,7 +12,8 @@
             "overlayOpacity": 0.4,
             "closeButton": true,
             "width": "90%",
-            "maxWidth": "1200px"
+            "maxWidth": "1200px",
+            "breadcrumb": <?php echo $block->getBreadcrumbs()->toHtml() ?>
         },
         "Magento_Ui/js/core/app": {
            "components": {

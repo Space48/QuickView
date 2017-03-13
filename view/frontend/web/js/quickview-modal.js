@@ -20,6 +20,7 @@ define([
             this.productUrl = ko.observable('');
             this.isSalable = ko.observable('');
             this.productImages = ko.observableArray([]);
+            this.addToCartAction = ko.observable([]);
 
             // Default values
             this.quantity = ko.observable(1);
@@ -67,6 +68,7 @@ define([
             root.productSku(data.sku);
             root.productUrl(data.product_url);
             root.isSalable(data.is_salable);
+            root.addToCartAction(data.add_to_cart.action);
 
             // Defaults
             root.imageIndex(0);

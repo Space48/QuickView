@@ -2,7 +2,8 @@
     <form action="/" method="post">
         <div class="quickview-gallery">
             <ul data-bind="foreach: productImages" class="quickview-gallery__main">
-                <li if="index === $parent.imageIndex()" class="quickview-gallery__main-item"><img data-bind="attr: {src: file, alt: label}"></li>
+                <li if="index === $parent.imageIndex()" class="quickview-gallery__main-item">
+                    <img data-bind="attr: {src: file, alt: label}"></li>
             </ul>
             <ul data-bind="foreach: productImages" class="quickview-gallery__thumbs">
                 <li data-bind="click: $parent.thumbnailSelect, attr: {class: 'quickview-gallery__thumb-item' + (index === $parent.imageIndex() ? ' is-active' : '')}">
@@ -78,10 +79,13 @@
                                 </span>
                             </div>
                         </div>
+                        <a data-bind="attr: { href: addToCart() }">Agregar</a>
                         <div class="actions">
-                            <button type="submit" data-bind="attr: {title: $t('Add to Basket')}" class="action primary tocart">
-                                <span data-bind="i18n: 'Add to Basket'"></span>
-                            </button>
+                            <form data-bind="attr: { action: addToCartAction() }">
+                                <button type="submit" data-bind="attr: {title: $t('Add to Basket')}" class="action primary tocart">
+                                    <span data-bind="i18n: 'Add to Basket'"></span>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

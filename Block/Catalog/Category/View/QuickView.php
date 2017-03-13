@@ -21,7 +21,8 @@ class QuickView extends Template
 {
 
     const SYSTEM_CONFIG_PATH = 'space48_quickview/general/';
-    const QUICKVIEW_PRODUCT_VIEW_ID = 'quickview/product/view/id/';
+
+    protected $route = 'quickview/product/*/';
 
     /**
      * @var \Magento\Framework\App\Config\ScopeConfigInterface
@@ -34,27 +35,23 @@ class QuickView extends Template
         parent::__construct($context);
     }
 
+    /**
+     * @return string
+     */
     public function getButtonText()
     {
         return $this->getConfig('btn_text');
     }
 
+    /**
+     * @param $field
+     *
+     * @return mixed
+     */
     public function getConfig($field)
     {
         return $this->_scopeConfig->getValue(self::SYSTEM_CONFIG_PATH . $field, ScopeInterface::SCOPE_STORE);
 
-    }
-
-    public function getQuickViewJson()
-    {
-        return json_encode([
-            'html' => $this->getContent()
-        ]);
-    }
-
-    private function getContent()
-    {
-        return 'Hello World';
     }
 
     /**
@@ -65,8 +62,20 @@ class QuickView extends Template
         return $this->getParentBlock()->getChildBlock('compare')->getProduct();
     }
 
+    /**
+     * @param int $productId
+     *
+     * @return string
+     */
     public function getQuickViewUrl($productId)
     {
-        return $this->getBaseUrl() . self::QUICKVIEW_PRODUCT_VIEW_ID . $productId;
+        return $this->getUrl($this->route, ['id' => $productId]);
+    }
+
+    public function getBreadcrumbs()
+    {
+        $bread = $this->getLayout()->getBlock('breadcrumbs');
+
+        return $bread;
     }
 }
