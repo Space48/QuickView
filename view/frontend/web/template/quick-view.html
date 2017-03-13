@@ -1,5 +1,6 @@
 <div class="quickview-content">
-    <form action="/" method="post">
+    <form data-bind="attr: { action: addToCartAction() }" method="post">
+        <input name="form_key" type="hidden" data-bind="attr: { value: formKey() }" />
         <div class="quickview-gallery">
             <ul data-bind="foreach: productImages" class="quickview-gallery__main">
                 <li if="index === $parent.imageIndex()" class="quickview-gallery__main-item">
@@ -79,13 +80,10 @@
                                 </span>
                             </div>
                         </div>
-                        <a data-bind="attr: { href: addToCart() }">Agregar</a>
                         <div class="actions">
-                            <form data-bind="attr: { action: addToCartAction() }">
-                                <button type="submit" data-bind="attr: {title: $t('Add to Basket')}" class="action primary tocart">
-                                    <span data-bind="i18n: 'Add to Basket'"></span>
-                                </button>
-                            </form>
+                            <button type="submit" data-bind="attr: {title: $t('Add to Basket')}" class="action primary tocart">
+                                <span data-bind="i18n: 'Add to Basket'"></span>
+                            </button>
                         </div>
                     </div>
                 </div>

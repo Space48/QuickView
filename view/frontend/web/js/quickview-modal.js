@@ -2,14 +2,17 @@ define([
     'jquery',
     'underscore',
     'uiComponent',
+    'mage/cookies',
     'ko'
-], function ($, _, Component, ko) {
+], function ($, _, Component, cookies, ko) {
     'use strict';
 
     var root;
 
     return Component.extend({
         initialize: function () {
+            var formKey = $.mage.cookies.get('form_key');
+
             // Store context for use in update method
             root = this;
 
@@ -20,7 +23,8 @@ define([
             this.productUrl = ko.observable('');
             this.isSalable = ko.observable('');
             this.productImages = ko.observableArray([]);
-            this.addToCartAction = ko.observable([]);
+            this.addToCartAction = ko.observable('');
+            this.formKey = ko.observable(formKey);
 
             // Default values
             this.quantity = ko.observable(1);
