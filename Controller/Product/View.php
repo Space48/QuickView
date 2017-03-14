@@ -74,14 +74,11 @@ class View extends Action
      * @param StoreManagerInterface       $storeManager
      * @param ProductRepositoryInterface  $productRepository
      * @param CategoryRepositoryInterface $categoryRepository
-     *
      * @param Image                       $imageHelper
      * @param Data                        $priceHelper
      * @param Registry                    $coreRegistry
      * @param CatalogHelperData           $catalogData
      * @param ListProduct                 $listProduct
-     *
-     * @internal param ListProduct $listProduct
      */
     public function __construct(
         Context $context,
@@ -149,11 +146,15 @@ class View extends Action
     /**
      * @param $price
      *
-     * @return float|string
+     * @return null|string
      */
     public function formatPrice($price)
     {
-        return $this->_priceHelper->currency($price, true, false);
+        if (!is_null($price)) {
+            $price = $this->_priceHelper->currency($price, true, false);
+        }
+
+        return $price;
     }
 
     /**
@@ -184,6 +185,12 @@ class View extends Action
     private function getBreadcrumbs()
     {
         $breadcrumbs = array();
+
+        $breadcrumbs['home'] = [
+            'label' => __('Home'),
+            'title' => __('Go to Home Page'),
+            'link'  => $this->_storeManager->getStore()->getBaseUrl()
+        ];
 
         $this->_initCategory();
 
