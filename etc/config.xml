@@ -12,6 +12,7 @@
     <default>
         <space48_quickview>
             <general>
+                <enabled>0</enabled>
                 <btn_text>Quick View</btn_text>
                 <custom_css>background-color: DarkOrange</custom_css>
             </general>
