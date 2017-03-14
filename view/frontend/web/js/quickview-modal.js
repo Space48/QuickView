@@ -3,8 +3,9 @@ define([
     'underscore',
     'uiComponent',
     'mage/cookies',
+    'mage/url',
     'ko'
-], function ($, _, Component, cookies, ko) {
+], function ($, _, Component, cookies, url, ko) {
     'use strict';
 
     var root;
@@ -17,6 +18,7 @@ define([
             root = this;
 
             this.productName = ko.observable('');
+            this.breadcrumb = ko.observableArray([]);
             this.productPrice = ko.observable('');
             this.productSpecialPrice = ko.observable('');
             this.productSku = ko.observable('');
@@ -52,12 +54,12 @@ define([
             root.imageIndex($(node.delegateTarget).index());
         },
 
-        update: function (data) {
-            // Called from quickview.js, on XHR response
-            var images = [], index = 0;
+        getGalleryImages: function (images) {
+            var imagesArray = [];
+            var index = 0;
 
-            _.each(data.gallery.images, function (image) {
-                images.push({
+            _.each(images, function (image) {
+                imagesArray.push({
                     'index': index++,
                     'file': image.file,
                     'thumbnail': image.thumbnail,
@@ -65,7 +67,34 @@ define([
                 });
             });
 
+            return imagesArray;
+        },
+
+        getBreadcrumb: function (breadcrumbs) {
+            var breadcrumbArray = [];
+
+            if (breadcrumbs.home) {
+                // Ensure 'home' is first item
+                breadcrumbArray.push(breadcrumbs.home);
+            }
+
+            _.each(breadcrumbs, function (breadcrumb, key) {
+                // Add rest of 'category' items
+                if (key !== 'home' && key !== 'product') {
+                    breadcrumbArray.push(breadcrumb);
+                }
+            });
+
+            return breadcrumbArray;
+        },
+
+        update: function (data) {
+            // Called from quickview.js, on XHR response
+            var images = this.getGalleryImages(data.gallery.images);
+            var breadcrumb = this.getBreadcrumb(data.breadcrumb);
+
             root.productImages(images);
+            root.breadcrumb(breadcrumb);
             root.productName(data.name);
             root.productPrice(data.price);
             root.productSpecialPrice(data.special_price);
@@ -74,7 +103,7 @@ define([
             root.isSalable(data.is_salable);
             root.addToCartAction(data.add_to_cart.action);
 
-            // Defaults
+            // Set some defaults on every update
             root.imageIndex(0);
             root.quantity(1);
         },
