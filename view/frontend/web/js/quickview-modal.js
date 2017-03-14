@@ -3,9 +3,8 @@ define([
     'underscore',
     'uiComponent',
     'mage/cookies',
-    'mage/url',
     'ko'
-], function ($, _, Component, cookies, url, ko) {
+], function ($, _, Component, cookies, ko) {
     'use strict';
 
     var root;
