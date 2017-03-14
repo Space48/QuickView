@@ -16,6 +16,7 @@ namespace Space48\QuickView\Block\Catalog\Category\View;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Framework\Registry;
 
 class QuickView extends Template
 {
@@ -25,13 +26,25 @@ class QuickView extends Template
     protected $route = 'quickview/product/*/';
 
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var \Magento\Framework\Registry
+     */
+    protected $_coreRegistry;
+
+    /**
+     * @param Context  $context
+     * @param Registry $coreRegistry
+     *
+     * @internal param Data $catalogData
+     * @internal param \Magento\Framework\App\Config\ScopeConfigInterface $
      */
 
     public function __construct(
-        Context $context
+        Context $context,
+
+        Registry $coreRegistry
     )
     {
+        $this->_coreRegistry = $coreRegistry;
         parent::__construct($context);
     }
 
@@ -46,7 +59,7 @@ class QuickView extends Template
     /**
      * @param $field
      *
-     * @return mixed
+     * @return \Magento\Framework\App\Config
      */
     public function getConfig($field)
     {
@@ -63,19 +76,22 @@ class QuickView extends Template
     }
 
     /**
-     * @param int $productId
+     * @param int  $productId
+     *
+     * @param  int $categoryId
      *
      * @return string
      */
-    public function getQuickViewUrl($productId)
+    public function getQuickViewUrl($productId, $categoryId)
     {
-        return $this->getUrl($this->route, ['id' => $productId]);
+        return $this->getUrl($this->route, ['id' => $productId, 'cat' => $categoryId]);
     }
 
-    public function getBreadcrumbs()
+    /**
+     * @return \Magento\Catalog\Model\Product
+     */
+    public function getCategory()
     {
-        $bread = $this->getLayout()->getBlock('breadcrumbs');
-
-        return $bread;
+        return $this->_coreRegistry->registry('current_category');
     }
 }
