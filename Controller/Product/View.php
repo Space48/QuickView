@@ -126,7 +126,7 @@ class View extends Action
             'product_url'   => $product->getProductUrl(),
             'is_salable'    => $product->getData('is_salable'),
             'gallery'       => $this->getGallery($product),
-            'breadcrumb'    => $this->getBreadcrumbs($product),
+            'breadcrumb'    => $this->getBreadcrumbs(),
             'add_to_cart'   => $this->_listProduct->getAddToCartPostParams($product)
         ));
 
