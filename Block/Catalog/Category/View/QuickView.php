@@ -33,9 +33,6 @@ class QuickView extends Template
     /**
      * @param Context  $context
      * @param Registry $coreRegistry
-     *
-     * @internal param Data $catalogData
-     * @internal param \Magento\Framework\App\Config\ScopeConfigInterface $
      */
 
     public function __construct(
@@ -77,7 +74,6 @@ class QuickView extends Template
 
     /**
      * @param int  $productId
-     *
      * @param  int $categoryId
      *
      * @return string
