@@ -115,10 +115,14 @@ class View extends Action
 
         $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
 
+        /* Return null for special price if price and special price are the same */
+        $specialPrice = ($product->getData('special_price') != $product->getData('price')) ?
+                        $this->formatPrice($product->getData('special_price')) : null;
+
         $result = $result->setData(array(
             'name'          => $product->getData('name'),
             'price'         => $this->formatPrice($product->getData('price')),
-            'special_price' => $this->formatPrice($product->getData('special_price')),
+            'special_price' => $specialPrice,
             'sku'           => $product->getData('sku'),
             'product_url'   => $product->getProductUrl(),
             'is_salable'    => $product->getData('is_salable'),
