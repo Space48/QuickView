@@ -15,7 +15,7 @@ From the terminal execute the following:
 
 then
 
-`composer require "space48/quickview:dev-master"`
+`composer require "space48/quickview:{module-version}"`
 
 ## How to use it
-Once installed, go to the `Admin Penel -> Stores -> Configuration -> Space48 -> Quick View` and `enable` the extension.
+Once installed, go to the `Admin Panel -> Stores -> Configuration -> Space48 -> Quick View` and `enable` the extension.
