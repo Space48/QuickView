@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+ * Space48_QuickView
+ *
+ * @category    Space48
+ * @package     Space48_QuickView
+ * @Date        04/2017
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ * @author      @diazwatson
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Controller\Cart\Add">
+        <plugin name="Space48_QuickView::Plugin/Checkout/Controller/Cart/Add" type="\Space48\QuickView\Plugin\Checkout\Controller\Cart\Add"/>
+    </type>
+</config>
