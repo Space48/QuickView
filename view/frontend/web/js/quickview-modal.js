@@ -26,6 +26,7 @@ define([
             this.productImages = ko.observableArray([]);
             this.addToCartAction = ko.observable('');
             this.formKey = ko.observable(formKey);
+            this.specialData = ko.observable({});
 
             // Default values
             this.quantity = ko.observable(1);
@@ -101,6 +102,7 @@ define([
             root.productUrl(data.product_url);
             root.isSalable(data.is_salable);
             root.addToCartAction(data.add_to_cart.action);
+            root.specialData(data.special_data);
 
             // Set some defaults on every update
             root.imageIndex(0);
