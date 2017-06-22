@@ -22,6 +22,7 @@ define([
             this.productSpecialPrice = ko.observable('');
             this.productSku = ko.observable('');
             this.productUrl = ko.observable('');
+            this.productType = ko.observable('');
             this.isSalable = ko.observable('');
             this.productImages = ko.observableArray([]);
             this.addToCartAction = ko.observable('');
@@ -38,6 +39,10 @@ define([
         getIsSalable: function () {
             // Return boolean value for isSalable for use in ko binding
             return (this.isSalable() === '1') ? true : false;
+        },
+
+        getIsGrouped: function () {
+            return (this.productType() === 'grouped') ? true : false;
         },
 
         incrementQty: function () {
@@ -100,6 +105,7 @@ define([
             root.productSpecialPrice(data.special_price);
             root.productSku(data.sku);
             root.productUrl(data.product_url);
+            root.productType(data.product_type);
             root.isSalable(data.is_salable);
             root.addToCartAction(data.add_to_cart.action);
             root.specialData(data.special_data);
