@@ -12,10 +12,10 @@
 namespace Space48\QuickView\Plugin\Checkout\Controller\Cart;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 
 class Add
 {
-
     /**
      * ScopeConfigInterface
      *
@@ -50,7 +50,6 @@ class Add
         if ($returnValue && !$this->shouldRedirectToCart()) {
             $returnValue->setUrl($referrerUrl);
         }
-
         return $returnValue;
     }
 
@@ -63,8 +62,7 @@ class Add
     {
         return $this->scopeConfig->getValue(
             'checkout/cart/redirect_to_cart',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+            ScopeInterface::SCOPE_STORE
         );
     }
-
 }

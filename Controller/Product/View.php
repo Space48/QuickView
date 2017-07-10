@@ -9,7 +9,7 @@
  * @author      @diazwatson
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Space48\QuickView\Controller\Product;
 
@@ -33,45 +33,45 @@ class View extends Action
     /**
      * @var StoreManagerInterface
      */
-    protected $_storeManager;
+    private $storeManager;
 
     /**
      * @var ProductRepositoryInterface
      */
-    protected $_productRepository;
+    private $productRepository;
 
     /**
      * @var CategoryRepositoryInterface
      */
-    protected $_categoryRepository;
+    private $categoryRepository;
 
     /**
      * @var Data
      */
-    protected $_priceHelper;
+    private $priceHelper;
 
     /**
      * @var Image
      */
-    protected $_imageHelper;
+    private $imageHelper;
 
     /**
      * @var ListProduct
      */
-    protected $_listProduct;
+    private $listProduct;
     /**
      * @var Registry
      */
-    protected $_coreRegistry;
+    private $coreRegistry;
 
     /**
      * @var CatalogHelperData
      */
-    protected $_catalogData;
+    private $catalogData;
 
-    protected $eventManager;
+    private $eventManager;
 
-    protected $catalogSession;
+    private $catalogSession;
 
     /**
      * View constructor.
@@ -85,8 +85,10 @@ class View extends Action
      * @param Registry                    $coreRegistry
      * @param CatalogHelperData           $catalogData
      * @param ListProduct                 $listProduct
+     * @param EventManager                $eventManager
      * @param Session                     $catalogSession
      */
+
     public function __construct(
         Context $context,
         StoreManagerInterface $storeManager,
@@ -100,14 +102,14 @@ class View extends Action
         EventManager $eventManager,
         Session $catalogSession
     ) {
-        $this->_productRepository = $productRepository;
-        $this->_categoryRepository = $categoryRepository;
-        $this->_storeManager = $storeManager;
-        $this->_priceHelper = $priceHelper;
-        $this->_imageHelper = $imageHelper;
-        $this->_listProduct = $listProduct;
-        $this->_coreRegistry = $coreRegistry;
-        $this->_catalogData = $catalogData;
+        $this->productRepository = $productRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->storeManager = $storeManager;
+        $this->priceHelper = $priceHelper;
+        $this->imageHelper = $imageHelper;
+        $this->listProduct = $listProduct;
+        $this->coreRegistry = $coreRegistry;
+        $this->catalogData = $catalogData;
         $this->eventManager = $eventManager;
         $this->catalogSession = $catalogSession;
         parent::__construct($context);
@@ -121,78 +123,100 @@ class View extends Action
      */
     public function execute()
     {
-        $product = $this->initProduct();
+        /** @var \Magento\Catalog\Model\Product $product */
+        $currentProduct = $this->coreRegistry->registry('current_product');
+        $product =  $currentProduct ? $currentProduct : $this->initProduct();
 
+        $data = $this->getQuickViewData($product);
         $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
 
-        /* Return null for special price if price and special price are the same */
-        $specialPrice = ($product->getData('special_price') != $product->getData('price')) ?
-                        $this->formatPrice($product->getData('special_price')) : null;
+        return $result->setData($data);
+    }
 
+    /**
+     * @return \Magento\Catalog\Api\Data\ProductInterface
+     *
+     */
+    private function initProduct()
+    {
+        $productId = $this->getRequest()->getParam('id');
+        $product = $this->productRepository->getById($productId);
+        $this->coreRegistry->register('current_product', $product);
+
+        return $product;
+    }
+
+    /**
+     * @param $product \Magento\Catalog\Model\Product
+     *
+     * @return array
+     */
+    private function getQuickViewData($product): array
+    {
         $data = [
             'name'          => $product->getData('name'),
             'price'         => $this->formatPrice($product->getData('price')),
-            'special_price' => $specialPrice,
+            'special_price' => $this->getSpecialPrice($product),
             'sku'           => $product->getData('sku'),
             'product_url'   => $product->getProductUrl(),
             'product_type'  => $product->getTypeId(),
             'is_salable'    => $product->getData('is_salable'),
             'gallery'       => $this->getGallery($product),
             'breadcrumb'    => $this->getBreadcrumbs(),
-            'add_to_cart'   => $this->_listProduct->getAddToCartPostParams($product)
+            'add_to_cart'   => $this->listProduct->getAddToCartPostParams($product)
         ];
 
         $this->catalogSession->setSpecialQuickViewData([]);
         $this->eventManager->dispatch('space_set_quickview_data_after', ['product' => $product]);
         $data['special_data'] = $this->catalogSession->getSpecialQuickViewData();
 
-        $result = $result->setData($data);
-
-        return $result;
-    }
-
-    /**
-     * @return \Magento\Catalog\Api\Data\ProductInterface|mixed
-     *
-     */
-    private function initProduct()
-    {
-        $productId = $this->getRequest()->getParam('id');
-        $product = $this->_productRepository->getById($productId);
-        $this->_coreRegistry->register('current_product', $product);
-
-        return $product;
+        return $data;
     }
 
     /**
      * @param $price
      *
-     * @return null|string
+     * @@return  float|string
      */
-    public function formatPrice($price)
+    private function formatPrice($price)
     {
-        if (!is_null($price)) {
-            $price = $this->_priceHelper->currency($price, true, false);
+        if (($price) != null) {
+            $price = $this->priceHelper->currency($price, true, false);
         }
 
         return $price;
     }
 
     /**
-     * @param $product
+     * @param $product \Magento\Catalog\Model\Product
+     *
+     * @return float|null|string
+     */
+    private function getSpecialPrice($product)
+    {
+        $specialPrice = ($product->getData('special_price') != $product->getData('price')) ?
+            $this->formatPrice($product->getData('special_price')) : null;
+
+        /* Return null for special price if price and special price are the same */
+
+        return $specialPrice;
+    }
+
+    /**
+     * @param $product \Magento\Catalog\Model\Product
      *
      * @return array
      */
-    protected function getGallery($product)
+    private function getGallery($product)
     {
         $gallery = $product->getData('media_gallery');
 
         foreach ($gallery['images'] as $key => $image) {
-            $gallery['images'][$key]['file'] = $this->_imageHelper->init($product, 'product_page_image_large')
+            $gallery['images'][$key]['file'] = $this->imageHelper->init($product, 'product_page_image_large')
                 ->setImageFile($image['file'])
                 ->getUrl();
 
-            $gallery['images'][$key]['thumbnail'] = $this->_imageHelper->init($product, 'product_page_image_small')
+            $gallery['images'][$key]['thumbnail'] = $this->imageHelper->init($product, 'product_page_image_small')
                 ->setImageFile($image['file'])
                 ->getUrl();
         }
@@ -205,18 +229,18 @@ class View extends Action
      */
     private function getBreadcrumbs()
     {
-        $breadcrumbs = array();
+        $breadcrumbs = [];
 
         $breadcrumbs['home'] = [
             'label' => __('Home'),
             'title' => __('Go to Home Page'),
-            'link'  => $this->_storeManager->getStore()->getBaseUrl()
+            'link'  => $this->storeManager->getStore()->getBaseUrl()
         ];
 
-        $this->_initCategory();
+        $this->initCategory();
 
         /** @var array $path */
-        $path = $this->_catalogData->getBreadcrumbPath();
+        $path = $this->catalogData->getBreadcrumbPath();
 
         foreach ($path as $name => $breadcrumb) {
             $breadcrumbs[$name] = $breadcrumb;
@@ -228,10 +252,10 @@ class View extends Action
     /**
      * @return $this
      */
-    protected function _initCategory()
+    private function initCategory()
     {
-        $category = $this->_categoryRepository->get($this->getRequest()->getParam('cat'), $this->getStoreId());
-        $this->_coreRegistry->register('current_category', $category);
+        $category = $this->categoryRepository->get($this->getRequest()->getParam('cat'), $this->getStoreId());
+        $this->coreRegistry->register('current_category', $category);
 
         return $this;
     }
@@ -241,9 +265,6 @@ class View extends Action
      */
     private function getStoreId()
     {
-        return $this->_storeManager->getStore()->getId();
+        return $this->storeManager->getStore()->getId();
     }
-
 }
-
-

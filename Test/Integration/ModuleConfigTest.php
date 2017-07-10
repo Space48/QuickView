@@ -13,17 +13,14 @@ declare(strict_types=1);
 
 namespace Space48\QuickView\Test\Integration;
 
-
 use Magento\Framework\Component\ComponentRegistrar;
 
 class ModuleConfigTest extends \PHPUnit_Framework_TestCase
 {
-
-    public function testModuleisInstalled()
+    public function testModuleIsRegistered()
     {
         $registrar = new ComponentRegistrar;
         $path = $registrar->getPaths(ComponentRegistrar::MODULE);
         $this->assertArrayHasKey('Space48_QuickView', $path);
-
     }
 }

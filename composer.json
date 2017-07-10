@@ -1,12 +1,12 @@
 {
   "name": "space48/quickview",
-  "description": "N/A",
+  "description": "A module to quick view products for Magento2",
   "require": {
     "php": "~5.6.0|~7.0.0",
     "magento/framework": "100.1.*"
   },
   "type": "magento2-module",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "license": [
     "proprietary"
   ],

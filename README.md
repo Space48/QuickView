@@ -1,5 +1,5 @@
 # QuickView
-Product QuickView Magento 2 Module
+A module to quick view products for Magento2
 
 ## Installation
 
@@ -15,7 +15,7 @@ From the terminal execute the following:
 
 then
 
-`composer require "space48/quickview:{module-version}"`
+`composer require "space48/quickview:{release-version}"`
 
 ## How to use it
 Once installed, go to the `Admin Panel -> Stores -> Configuration -> Space48 -> Quick View` and `enable` the extension.

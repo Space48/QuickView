@@ -9,7 +9,7 @@
  * @author      @diazwatson
  */
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Space48\QuickView\Block\Catalog\Category\View;
 
@@ -23,12 +23,12 @@ class QuickView extends Template
 
     const SYSTEM_CONFIG_PATH = 'space48_quickview/general/';
 
-    protected $route = 'quickview/product/*/';
+    private $route = 'quickview/product/*/';
 
     /**
      * @var \Magento\Framework\Registry
      */
-    protected $_coreRegistry;
+    private $coreRegistry;
 
     /**
      * @param Context  $context
@@ -37,11 +37,9 @@ class QuickView extends Template
 
     public function __construct(
         Context $context,
-
         Registry $coreRegistry
-    )
-    {
-        $this->_coreRegistry = $coreRegistry;
+    ) {
+        $this->coreRegistry = $coreRegistry;
         parent::__construct($context);
     }
 
@@ -54,22 +52,26 @@ class QuickView extends Template
     }
 
     /**
-     * @param $field
+     * @param $field string
      *
      * @return \Magento\Framework\App\Config
      */
     public function getConfig($field)
     {
-        return $this->_scopeConfig->getValue(self::SYSTEM_CONFIG_PATH . $field, ScopeInterface::SCOPE_STORE);
-
+        return $this->_scopeConfig->getValue(
+            self::SYSTEM_CONFIG_PATH . $field,
+            ScopeInterface::SCOPE_STORE
+        );
     }
 
     /**
-     * @return \Magento\Catalog\Model\Product
+     * @return \Magento\Catalog\Api\Data\ProductInterface
      */
     public function getProduct()
     {
-        return $this->getParentBlock()->getChildBlock('compare')->getProduct();
+        /** @var $compareBlock \Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare */
+        $compareBlock = $this->getParentBlock()->getChildBlock('compare');
+        return $compareBlock->getProduct();
     }
 
     /**
@@ -86,8 +88,8 @@ class QuickView extends Template
     /**
      * @return \Magento\Catalog\Model\Product
      */
-    public function getCategory()
+    public function getCurrentCategory()
     {
-        return $this->_coreRegistry->registry('current_category');
+        return $this->coreRegistry->registry('current_category');
     }
 }
