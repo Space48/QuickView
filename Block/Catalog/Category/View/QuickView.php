@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace Space48\QuickView\Block\Catalog\Category\View;
 
-use Magento\Framework\View\Element\Template\Context;
+use Magento\Catalog\Block\Product\Context;
+use Magento\Catalog\Block\Product\ProductList\Item\Block as ProductListBlock;
 use Magento\Framework\View\Element\Template;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\Registry;
 
-class QuickView extends Template
+class QuickView extends ProductListBlock
 {
 
     const SYSTEM_CONFIG_PATH = 'space48_quickview/general/';
@@ -62,16 +63,6 @@ class QuickView extends Template
             self::SYSTEM_CONFIG_PATH . $field,
             ScopeInterface::SCOPE_STORE
         );
-    }
-
-    /**
-     * @return \Magento\Catalog\Api\Data\ProductInterface
-     */
-    public function getProduct()
-    {
-        /** @var $compareBlock \Magento\Catalog\Block\Product\ProductList\Item\AddTo\Compare */
-        $compareBlock = $this->getParentBlock()->getChildBlock('compare');
-        return $compareBlock->getProduct();
     }
 
     /**
