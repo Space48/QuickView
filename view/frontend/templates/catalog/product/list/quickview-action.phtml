@@ -1,10 +1,10 @@
 <?php /** @var Space48\QuickView\Block\Catalog\Category\View\QuickView $block */ ?>
 <a href="javascript:void(0)"
-    id="quick-view-<?php echo $block->getProduct()->getId();?>"
-    data-quickview-url="<?php echo $block->getQuickViewUrl($block->getProduct()->getId(), $block->getCurrentCategory()->getId()); ?>"
+    id="quick-view-<?= $block->escapeHtmlAttr(__($block->getProduct()->getId()));?>"
+    data-quickview-url="<?= $block->escapeHtmlAttr(__($block->getQuickViewUrl($block->getProduct()->getId(), $block->getCurrentCategory()->getId()))); ?>"
     class="action tocart primary js-quick-view js-quickview-action"
-    title="<?php echo $block->escapeHtml(__($block->getButtonText())); ?>"
+    title="<?= $block->escapeHtmlAttr(__($block->getButtonText())); ?>"
     aria-label=""
     role="button">
-    <?php /* @escapeNotVerified */ echo __($block->getButtonText()) ?>
+    <?= escapeHtml(__($block->getButtonText())) ?>
 </a>
