@@ -11,6 +11,7 @@
 
 namespace Space48\QuickView\Plugin\Checkout\Controller\Cart;
 
+use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
@@ -47,7 +48,7 @@ class Add
         $referrerUrl = $subject->getRequest()->getServer('HTTP_REFERER');
 
         $returnValue = $proceed();
-        if ($returnValue && !$this->shouldRedirectToCart()) {
+        if ($returnValue instanceof Redirect && !$this->shouldRedirectToCart()) {
             $returnValue->setUrl($referrerUrl);
         }
         return $returnValue;
