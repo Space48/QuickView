@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.13] - 2021-02-10
+
+### Fixed
+
+- fixed the plugin on add to cart action
+
 ## [1.0.12] - 2020-11-30
 
 ### Fixed
